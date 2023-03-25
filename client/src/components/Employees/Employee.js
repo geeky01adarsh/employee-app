@@ -12,6 +12,7 @@ import {
   Typography,
   TableCell,
 } from "@mui/material";
+import Map from "./Map";
 
 const deleteHandler = async (_id) => {
   await axios.delete(`http://localhost:5000/employee/${_id}`);
@@ -21,39 +22,50 @@ const Employee = () => {
   const history = useNavigate();
   const id = useParams().id;
   console.log(id);
-    const [employee, setEmployee] = useState({
-      _id:"",
+  const [employee, setEmployee] = useState({
+    _id: "",
     fname: "",
     lname: "",
     email: "",
     contact_no: 0,
     emp_id: 0,
     image: "",
+    address: "",
   });
-    const handleDelete = (_id) => {
-      deleteHandler(_id).then(() => {
-        console.log("Successfully Deleted Empolyee Record");
-        history('/');
-      });
-    };
+
+  
+
+  const [center, setCenter] = useState();
+  const handleDelete = (_id) => {
+    deleteHandler(_id).then(() => {
+      console.log("Successfully Deleted Empolyee Record");
+      history("/");
+    });
+  };
 
   const getEmployeeDetails = async () => {
     return await axios
       .get(`http://localhost:5000/employee/${id}`)
       .then((res) => res.data);
   };
+
   useEffect(() => {
     getEmployeeDetails().then((data) => {
       const EmployeeDetails = data.employee;
-        setEmployee({
-            _id: EmployeeDetails._id,
+      setEmployee({
+        _id: EmployeeDetails._id,
         fname: EmployeeDetails.fname,
         lname: EmployeeDetails.lname,
         email: EmployeeDetails.email,
         contact_no: EmployeeDetails.contact_no,
         emp_id: EmployeeDetails.emp_id,
         image: EmployeeDetails.image,
+        address: EmployeeDetails.address,
       });
+      const add = EmployeeDetails.address.split("+");
+      const lat = Number(add[0]),
+        long = Number(add[1]);
+      setCenter([lat, long]);
     });
   }, []);
   return (
@@ -163,6 +175,7 @@ const Employee = () => {
             </TableRow>
           </TableBody>
         </Table>
+        {center ? <Map add={center} /> : <></>}
       </Box>
     </>
   );

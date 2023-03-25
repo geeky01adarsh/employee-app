@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const CONNECTION_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PW}@cluster0.x4pap.mongodb.net/?retryWrites=true&w=majority`;
+const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL;
     
 app.get("/", (req, res) => {
   res.send("Hey there");

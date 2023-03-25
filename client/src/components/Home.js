@@ -18,10 +18,6 @@ const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 const deleteHandler = async (_id) => {
   await axios.delete(`http://localhost:5000/employee/${_id}`);
 };
@@ -134,6 +130,14 @@ const Home = () => {
         sx={{ mt: 3 }}
       >
         Add More Employee Records
+      </Button>
+      <Button
+        color="primary"
+        LinkComponent={NavLink}
+        to={`/stats`}
+        sx={{ mt: 3 }}
+      >
+        View Stats
       </Button>
     </>
   );

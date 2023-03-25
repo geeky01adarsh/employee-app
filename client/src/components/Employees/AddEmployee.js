@@ -5,6 +5,8 @@ import {
   FormLabel,
   Box,
   Button,
+  Select,
+  MenuItem,
   FormControlLabel,
 } from "@mui/material";
 import { MuiTelInput } from "mui-tel-input";
@@ -18,6 +20,10 @@ const AddEmployee = () => {
     email: "",
     contact_no: 0,
     image: "",
+    address: "",
+    age: 0,
+    department: "",
+    emp_status: "",
   });
 
   const handleChange = (e) => {
@@ -25,6 +31,7 @@ const AddEmployee = () => {
       ...prevState,
       [e.target.name]: [e.target.value],
     }));
+    console.log(input)
   };
 
   const sendReq = async () => {
@@ -35,21 +42,23 @@ const AddEmployee = () => {
         email: String(input.email),
         contact_no: Number(input.contact_no),
         image: String(input.image),
-      }).catch(err => {
-          console.log(err)
-          alert("Something went wrong!!! \nPlease try again!!!")
+        address: String(input.address),
+        age: Number(input.age), emp_status: String(input.emp_status)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Something went wrong!!! \nPlease try again!!!");
       })
       .then((res) => res.data)
       .then(console.log("Successfully added the book"));
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (input.contact_no >= 1000000000 && input.contact_no <= 9999999999) {
-            sendReq().then(() => history("/"));
-        }
-        else {
-            alert("Please enter a valid 10 digits Mobile No.")
-        }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (input.contact_no >= 1000000000 && input.contact_no <= 9999999999) {
+      sendReq().then(() => history("/"));
+    } else {
+      alert("Please enter a valid 10 digits Mobile No.");
+    }
   };
 
   return (
@@ -104,6 +113,57 @@ const AddEmployee = () => {
             variant="outlined"
             name="contact_no"
           />
+          <FormLabel> Address </FormLabel>
+          <TextField
+            value={input.address}
+            onChange={handleChange}
+            type="normal"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            name="address"
+          />
+          
+          <FormLabel> Age </FormLabel>
+          <TextField
+            value={input.age}
+            onChange={handleChange}
+            type="num"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            name="age"
+          />
+          <FormLabel> Department </FormLabel>
+          <TextField
+            value={input.department}
+            onChange={handleChange}
+            type="normal"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            name="department"
+          />
+          <FormLabel> Employee Status </FormLabel>
+          {/* <TextField
+            value={input.contact_no}
+            onChange={handleChange}
+            type="num"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            name="contact_no"
+          /> */}
+          <TextField
+            value={input.emp_status}
+            onChange={handleChange}
+            type="normal"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            name="emp_status"
+          />
+
           <FormLabel> Image URL </FormLabel>
           <TextField
             value={input.image}

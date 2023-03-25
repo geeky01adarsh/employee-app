@@ -24,8 +24,19 @@ const employeeSchema = new Schema({
     required: true,
     unique: true,
   },
+  age: {
+    type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
+  },
+  emp_status: {
+     type:String, required:true
   }
 });
 

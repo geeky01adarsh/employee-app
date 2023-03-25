@@ -36,7 +36,7 @@ export const getEmployeeById = async (req, res, next) => {
 export const addEmployees = async (req, res, next) => {
   let employee;
   console.log(req.body);
-  const { fname, lname, email, contact_no, image } = req.body;
+  const { fname, lname, email, contact_no, image, age, address, emp_status } = req.body;
   let emp_id;
   do {
     emp_id = Math.floor(Math.random() * 90000) + 10000;
@@ -44,12 +44,15 @@ export const addEmployees = async (req, res, next) => {
     emp_ids.add(emp_id);
   try {
     employee = new Employee({
+      emp_id,
       fname,
       lname,
       email,
-      emp_id,
       contact_no,
       image,
+      age,
+      address,
+      emp_status,
     });
     await employee.save();
   } catch (err) {
@@ -65,7 +68,8 @@ export const addEmployees = async (req, res, next) => {
 
 export const updateEmployeeById = async (req, res, next) => {
   const id = req.params.id;
-  const { fname, lname, email, contact_no, image } = req.body;
+  const { fname, lname, email, contact_no, image, age, address, emp_status } =
+    req.body;
   let employee;
   try {
     employee = await Employee.findByIdAndUpdate(id, {
@@ -74,6 +78,9 @@ export const updateEmployeeById = async (req, res, next) => {
       email,
       contact_no,
       image,
+      age,
+      address,
+      emp_status,
     });
     employee = await employee.save();
   } catch (err) {
